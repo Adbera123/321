@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LOSHARA</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: black;
+            font-family: 'Press Start 2P', cursive;
+            flex-direction: column;
+        }
+
+        .troll-text {
+            font-size: 10vw;
+            font-weight: bold;
+            text-transform: uppercase;
+            display: flex;
+            gap: 1vw;
+            opacity: 0; /* Спочатку приховано */
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        .letter {
+            animation: bounce 1s infinite ease-in-out alternate, colorChange 2s infinite alternate;
+            text-shadow: 7.5px 7.5px 15px grey, -7.5px -7.5px 15px whitesmoke;
+        }
+
+        @keyframes bounce {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-15%); }
+            100% { transform: translateY(0); }
+        }
+
+        @keyframes colorChange {
+            0% { color: rgb(0, 0, 0); }
+            20% { color: rgb(51, 51, 51); }
+            40% { color: rgb(102, 102, 102); }
+            60% { color: rgb(153, 153, 153); }
+            80% { color: rgb(204, 204, 204); }
+            100% { color: rgb(255, 255, 255); }
+        }
+
+        /* Кнопка */
+        .start-button {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 16px;
+            padding: 15px 30px;
+            background-color: white;
+            border: 2px solid black;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .start-button:hover {
+            background-color: grey;
+            color: white;
+        }
+
+        /* Завантажувальний значок */
+        .loader {
+            display: none;
+            width: 50px;
+            height: 50px;
+            border: 5px solid white;
+            border-top: 5px solid transparent;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-top: 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Адаптація під мобільні пристрої */
+        @media (max-width: 600px) {
+            .troll-text {
+                font-size: 12vw;
+                gap: 2vw;
+            }
+            .letter {
+                text-shadow: 3px 3px 6.25px grey, -3px -3px 6.25px whitesmoke !important;
+            }
+            .start-button {
+                font-size: 12px;
+                padding: 10px 20px;
+            }
+        }
+      
+    </style>
+</head>
+<body>
+
+    <button class="start-button" onclick="start()">Натисни, щоб продовжити</button>
+
+    <div class="loader" id="loader"></div>
+
+    <div class="troll-text" id="text">
+        <span class="letter" style="animation-delay: 0s;">L</span>
+        <span class="letter" style="animation-delay: 0.1s;">O</span>
+        <span class="letter" style="animation-delay: 0.2s;">S</span>
+        <span class="letter" style="animation-delay: 0.3s;">H</span>
+        <span class="letter" style="animation-delay: 0.4s;">A</span>
+        <span class="letter" style="animation-delay: 0.5s;">R</span>
+        <span class="letter" style="animation-delay: 0.6s;">A</span>
+    </div>
+
+    <script>
+        function start() {
+            let text = document.getElementById("text");
+            let button = document.querySelector(".start-button");
+            let loader = document.getElementById("loader");
+
+            button.style.display = "none"; // Сховати кнопку
+            loader.style.display = "block"; // Показати завантаження
+
+            // Відтворення звуку
+            let audio = new Audio("audio.mp3"); // Вкажи правильний шлях до файлу
+            audio.loop = true; 
+            audio.volume = 1.0;
+
+            audio.play().then(() => {
+                loader.style.display = "none"; // Прибрати завантаження тільки після старту звуку
+                text.style.opacity = "1"; // Показати текст
+            }).catch(error => {
+                console.log("Автовідтворення заблоковане, очікуємо дії користувача...");
+                document.addEventListener("click", () => {
+                    audio.play().then(() => {
+                        loader.style.display = "none";
+                        text.style.opacity = "1";
+                    });
+                }, { once: true });
+            });
+        }
+    </script>
+
+</body>
+</html>
