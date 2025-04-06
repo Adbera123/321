@@ -31,10 +31,10 @@
       opacity: 0;
       transition: opacity 0.5s ease-in-out;
       margin-top: -5vh;
-      flex-wrap: nowrap;  /* <-- не дозволяємо переносити */
+      flex-wrap: nowrap;
       justify-content: center;
       text-align: center;
-      white-space: nowrap; /* <-- додаємо це */
+      white-space: nowrap;
     }
 
     .letter {
@@ -66,6 +66,7 @@
       text-align: center;
       color: black;
       z-index: 10;
+      visibility: visible;
     }
 
     .start-button:hover,
@@ -102,7 +103,7 @@
     }
 
     .telegram-link-wrapper {
-      position: absolute;
+      position: fixed;
       bottom: 30px;
       text-align: center;
       width: 100%;
@@ -116,7 +117,7 @@
 
     @media (max-width: 600px) {
       .troll-text {
-        font-size: 9vw;           /* зменшуємо шрифт для мобільних */
+        font-size: 9vw;
         gap: 1vw;
         margin-top: -8vh;
       }
